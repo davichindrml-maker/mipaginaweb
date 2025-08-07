@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Opciones</title>
+</head>
+<body>
+    <h2>Bienvenido, {{ user }}</h2>
+    <form action="{{ url_for('leer') }}" method="get">
+        <input type="hidden" name="user" value="{{ user }}">
+        <input type="hidden" name="password" value="{{ password }}">
+        <button type="submit">Leer un mensaje</button>
+    </form>
+    <form action="{{ url_for('escribir') }}" method="get">
+        <input type="hidden" name="user" value="{{ user }}">
+        <input type="hidden" name="password" value="{{ password }}">
+        <button type="submit">Escribir un mensaje</button>
+    </form>
+</body>
+</html>

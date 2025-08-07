@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Leer mensaje</title>
+</head>
+<body>
+    <h2>Leer un mensaje</h2>
+    <form method="POST">
+        <textarea name="codigo" rows="4" cols="50" placeholder="Pega aquí el código recibido..." required></textarea><br>
+        <input type="hidden" name="password" value="{{ password }}">
+        <button type="submit">Decodificar</button>
+    </form>
+</body>
+</html>

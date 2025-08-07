@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Secreto</title>
+</head>
+<body>
+    <h2>Inicio de sesión</h2>
+    <form method="POST">
+        <input type="text" name="usuario" placeholder="Usuario" required><br>
+        <input type="password" name="contraseña" placeholder="Contraseña" required><br>
+        <button type="submit">Ingresar</button>
+    </form>
+    {% if mensaje %}
+    <p style="color:red">{{ mensaje }}</p>
+    {% endif %}
+</body>
+</html>
