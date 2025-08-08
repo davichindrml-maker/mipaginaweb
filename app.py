@@ -20,28 +20,30 @@ dic = {
     'u': 22, 'v': 23, 'w': 24, 'x': 25, 'y': 26, 'z': 27,
     ' ': 0, '?': 28, '¿': 29, '.': 30, ':': 31, '¡': 32, '!': 33, ',': 34
 }
+# Diccionario números-letra
 dic_inv = {v: k for k, v in dic.items()}
+#Funcion para convertir una string a una lista de números
 def codificar_a_numero(texto):
     texto = texto.lower()
     return [dic.get(letra, 0) for letra in texto]
-
+#Función para convertir una lista de números una matriz 4x4
 def convertir_msj_matriz_4x4(lista):
     lista = lista[:16] + [0] * (16 - len(lista)) if len(lista) < 16 else lista[:16]
     return np.array(lista).reshape((4, 4))
-
+#Función para rellenar una lista de números a una nueva lista con cierta extensión
 def lista_clave_rellena(lista_clave, longitud):
     return (lista_clave * ((longitud // len(lista_clave)) + 1))[:longitud]
-
+#Función para convertir una lista de números de cierta extensión a una matriz 4x4
 def clave_matriz(clave_list):
     return np.array(clave_list).reshape((4, 4))
-
+#Función para invertir una matriz
 def inversa_matriz(matriz):
     return np.linalg.inv(matriz)
-
+#Función para convertir un código a una matriz 4x4
 def convertir_codigo_matriz(codigo):
     lista = [int(num) for num in codigo.split('-') if num.strip().isdigit()]
     return np.array(lista).reshape((4, 4))
-
+#Función para codificar un mensaje
 def mensaje_codificado_final(msj, password):
     lista_msj = codificar_a_numero(msj)
     matriz_A = convertir_msj_matriz_4x4(lista_msj)
@@ -49,6 +51,7 @@ def mensaje_codificado_final(msj, password):
     matriz_B = clave_matriz(lista_clave_rellena(lista_clave, 16))
     matriz_C = np.matmul(matriz_A, matriz_B)
     return '-'.join(str(int(round(num))) for num in matriz_C.flatten())
+#Función para decodificar un mensaje
 
 def decodificar_mensaje(codigo, password):
     matriz_C = convertir_codigo_matriz(codigo)
@@ -105,6 +108,7 @@ def leer():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Toma el puerto que Render le indique
     app.run(host="0.0.0.0", port=port)
+
 
 
 
