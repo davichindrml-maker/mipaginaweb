@@ -7,8 +7,11 @@ app = Flask(__name__)
 
 # Base de datos (usuarios y contraseñas)
 DIC = {
-    "usuario": ["claulopez", "Jacksoooon", "Phdian", "Choco_Marii", "nadiashit", "berenice", "pedrinho", "davidlima", "Esqueyosoyasi", "Leohernandez", "Lissete", "ThePugG","Eugene","Yera","YennyLeal","MrPugs"],
-    "contraseña": ["umpalumpa", "moonwenee", "Mimamimi123", "Ingatumais", "vetealv", "amoamifamilia", "pecj", "soydaviddd", "DCOPN", "Energia", "cocacola123", "Pugcore","ferrosolar","Psique123","Tukola123","Axeltorres2002"]
+    'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7,
+    'h': 8, 'i': 9, 'j': 10, 'k': 11, 'l': 12, 'm': 13, 'n': 14,
+    'ñ': 15, 'o': 16, 'p': 17, 'q': 18, 'r': 19, 's': 20, 't': 21,
+    'u': 22, 'v': 23, 'w': 24, 'x': 25, 'y': 26, 'z': 27,
+    ' ': 0, '?': 28, '¿': 29, '.': 30, ':': 31, '¡': 32, '!': 33, ',': 34,"á":35,"é":36,"í":37,"ó":38,"ú":39
 }
 usuarios = pd.DataFrame(data=DIC)
 
@@ -108,6 +111,7 @@ def leer():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Toma el puerto que Render le indique
     app.run(host="0.0.0.0", port=port)
+
 
 
 
