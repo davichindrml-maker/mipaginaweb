@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Base de datos (usuarios y contraseñas)
 DIC= {
     "usuario": ["claulopez", "Jacksoooon","Phdian", "Choco_Marii", "nadiashit","berenice", "pedrinho","davidlima","Esqueyosoyasi","Leohernandez","Lissete","ThePugG","Pollo","Yera"],
-    "contraseña": ["umpalumpa","moonwenee","Mimamimi","Ingatumais","vetealv","amoamifamilia","pecj","soydaviddd","DCOPN","Energia","cocacola","Pugcore","GaussJordan","Psique"]
+    "contraseña": ["umpalumpa","moonwenee","Mimamimi","Ingatumais","vetealv","amoamifamilia","pecj6573","soydaviddd","DCOPN","Energia","cocacola","Pugcore","GaussJordan","Psique"]
 }
 usuarios = pd.DataFrame(data=DIC)
 
@@ -26,37 +26,53 @@ dic_inv = {v: k for k, v in dic.items()}
 def codificar_a_numero(texto):
     texto = texto.lower()
     return [dic.get(letra, 0) for letra in texto]
-#Función para convertir una lista de números una matriz 4x4
-def convertir_msj_matriz_4x4(lista):
-    lista = lista[:16] + [0] * (16 - len(lista)) if len(lista) < 16 else lista[:16]
-    return np.array(lista).reshape((4, 4))
-#Función para rellenar una lista de números a una nueva lista con cierta extensión
-def lista_clave_rellena(lista_clave, longitud):
-    return (lista_clave * ((longitud // len(lista_clave)) + 1))[:longitud]
-#Función para convertir una lista de números de cierta extensión a una matriz 4x4
-def clave_matriz(clave_list):
-    return np.array(clave_list).reshape((4, 4))
+#Función para convertir una lista de números una matriz 5x5
+def convertir_msj_matriz_5x5(lista):
+    lista = lista[:25] + [0] * (25 - len(lista)) if len(lista) < 25 else lista[:25]
+    return np.array(lista).reshape((5, 5))
+#Función que convierte un string a un numero entero
+def convertir_contra_a_num (contraseña,dicc):
+    numeros=[str(dic[letra])for letra in contraseña.lower() if letra in dic]
+    return int("".join(numeros))
+#Función que  genera una matriz invertible
+def generar_matriz_invertible(tamano, low, high, eps, max_intentos):     
+    random.seed(entero)
+    intentos = 0
+    while True:
+        intentos += 1
+        # 1) Crear lista de tamano*tamano números aleatorios
+        lista = [random.randint(low, high) for _ in range(tamano * tamano)]
+        # 2) Convertir la lista a un array NumPy y darle forma (reshape) tamano x tamano
+        matriz = np.array(lista).reshape(tamano, tamano)
+        # 3) Calcular el determinante (número de punto flotante)
+        det = np.linalg.det(matriz)
+        # 4) Comprobar que no sea "casi" cero
+        if abs(det) > eps:
+            return matriz
+            # 5) Salida segura si no encontramos en max_intentos
+    if intentos >= max_intentos:
+        raise RuntimeError(f"No se encontró una matriz invertible tras {max_intentos} intentos.")
 #Función para invertir una matriz
 def inversa_matriz(matriz):
     return np.linalg.inv(matriz)
-#Función para convertir un código a una matriz 4x4
+#Función para convertir un código a una matriz 5x5
 def convertir_codigo_matriz(codigo):
     lista = [int(num) for num in codigo.split('-') if num.strip().isdigit()]
-    return np.array(lista).reshape((4, 4))
+    return np.array(lista).reshape((5, 5))
 #Función para codificar un mensaje
 def mensaje_codificado_final(msj, password):
     lista_msj = codificar_a_numero(msj)
-    matriz_A = convertir_msj_matriz_4x4(lista_msj)
-    lista_clave = codificar_a_numero(password)
-    matriz_B = clave_matriz(lista_clave_rellena(lista_clave, 16))
+    matriz_A = convertir_msj_matriz_5x5(lista_msj)
+    entero=convertir_contra_a_num (password,dic)
+    matriz_B=generar_matriz_invertible(5,1,25,1e-6,1000)
     matriz_C = np.matmul(matriz_A, matriz_B)
     return '-'.join(str(int(round(num))) for num in matriz_C.flatten())
 #Función para decodificar un mensaje
 
 def decodificar_mensaje(codigo, password):
     matriz_C = convertir_codigo_matriz(codigo)
-    lista_clave = codificar_a_numero(password)
-    matriz_B = clave_matriz(lista_clave_rellena(lista_clave, 16))
+    entero=convertir_contra_a_num (password,dic)
+    matriz_B=generar_matriz_invertible(5,1,25,1e-6,1000)
     matriz_inv_B = inversa_matriz(matriz_B)
     matriz_A = np.matmul(matriz_C, matriz_inv_B)
     matriz_A_int = np.rint(matriz_A).astype(int)
@@ -108,6 +124,7 @@ def leer():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Toma el puerto que Render le indique
     app.run(host="0.0.0.0", port=port)
+
 
 
 
