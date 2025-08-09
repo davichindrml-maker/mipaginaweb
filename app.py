@@ -36,8 +36,8 @@ def convertir_contra_a_num (contraseña,dicc):
     numeros=[str(dic[letra])for letra in contraseña.lower() if letra in dic]
     return int("".join(numeros))
 #Función que  genera una matriz invertible
-def generar_matriz_invertible(tamano, low, high, eps, max_intentos):     
-    random.seed(entero)
+def generar_matriz_invertible(tamano, low, high, eps, max_intentos,semilla):     
+    random.seed(semilla)
     intentos = 0
     while True:
         intentos += 1
@@ -64,16 +64,16 @@ def convertir_codigo_matriz(codigo):
 def mensaje_codificado_final(msj, password):
     lista_msj = codificar_a_numero(msj)
     matriz_A = convertir_msj_matriz_5x5(lista_msj)
-    entero=convertir_contra_a_num (password,dic)
-    matriz_B=generar_matriz_invertible(5,1,25,1e-6,1000)
+    semilla=convertir_contra_a_num (password,dic)
+    matriz_B=generar_matriz_invertible(5,1,25,1e-6,1000,semilla)
     matriz_C = np.matmul(matriz_A, matriz_B)
     return '-'.join(str(int(round(num))) for num in matriz_C.flatten())
 #Función para decodificar un mensaje
 
 def decodificar_mensaje(codigo, password):
     matriz_C = convertir_codigo_matriz(codigo)
-    entero=convertir_contra_a_num (password,dic)
-    matriz_B=generar_matriz_invertible(5,1,25,1e-6,1000)
+    semilla=convertir_contra_a_num (password,dic)
+    matriz_B=generar_matriz_invertible(5,1,25,1e-6,1000,semilla)
     matriz_inv_B = inversa_matriz(matriz_B)
     matriz_A = np.matmul(matriz_C, matriz_inv_B)
     matriz_A_int = np.rint(matriz_A).astype(int)
@@ -125,6 +125,7 @@ def leer():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Toma el puerto que Render le indique
     app.run(host="0.0.0.0", port=port)
+
 
 
 
