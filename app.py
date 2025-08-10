@@ -78,7 +78,7 @@ def decodificar_mensaje(codigo, password):
     matriz_A = np.matmul(matriz_C, matriz_inv_B)
     matriz_A_int = np.rint(matriz_A).astype(int)
     letras = [dic_inv.get(num, '') for num in matriz_A_int.flatten()]
-    return ''.join(letras)
+    return ''.join(letras).capitalize()
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -125,6 +125,7 @@ def leer():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Toma el puerto que Render le indique
     app.run(host="0.0.0.0", port=port)
+
 
 
 
