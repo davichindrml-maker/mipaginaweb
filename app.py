@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import os
 import random
+import math
 
 app = Flask(__name__)
 
@@ -126,6 +127,7 @@ def leer():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Toma el puerto que Render le indique
     app.run(host="0.0.0.0", port=port)
+
 
 
 
