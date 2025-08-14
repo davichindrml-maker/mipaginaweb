@@ -3,16 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Login Secreto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        form {
+            background-color: white;
+            display: inline-block;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 250px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .mensaje {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
     <h2>Inicio de sesión</h2>
+
     <form method="POST">
-        <input type="text" name="usuario" placeholder="Usuario" required><br>
+        <input type="text" name="usuario" placeholder="Nombre de usuario" required><br>
         <input type="password" name="contraseña" placeholder="Contraseña" required><br>
-        <button type="submit">Ingresar</button>
+        <input type="submit" value="Ingresar">
     </form>
-    {% if mensaje %}
-    <p style="color:red">{{ mensaje }}</p>
-    {% endif %}
+
+    
 </body>
 </html>
