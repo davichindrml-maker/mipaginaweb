@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for,session
 import pandas as pd
 import numpy as np
 import os
@@ -6,7 +6,7 @@ import random
 import math
 
 app = Flask(__name__)
-
+app.secret.key="mi_clave_ultra_secreta"
 # Base de datos (usuarios y contraseñas)
 DIC= {
     "usuario": ["claulopez", "Jacksoooon","Phdian", "Choco_Marii", "nadiashit","berenice", "pedrinho","davidlima","Esqueyosoyasi","Leohernandez","Lissete","ThePugG","Pollo","Yera","Eugene","Yenny_leal"],
@@ -128,6 +128,7 @@ def leer():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Toma el puerto que Render le indique
     app.run(host="0.0.0.0", port=port)
+
 
 
 
