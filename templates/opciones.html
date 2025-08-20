@@ -3,18 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>Opciones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .container {
+            background-color: white;
+            display: inline-block;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 25px;
+            margin: 10px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <h2>Bienvenido, {{ user }}</h2>
-    <form action="{{ url_for('leer') }}" method="get">
-        <input type="hidden" name="user" value="{{ user }}">
-        <input type="hidden" name="password" value="{{ password }}">
-        <button type="submit">Leer un mensaje</button>
-    </form>
-    <form action="{{ url_for('escribir') }}" method="get">
-        <input type="hidden" name="user" value="{{ user }}">
-        <input type="hidden" name="password" value="{{ password }}">
-        <button type="submit">Escribir un mensaje</button>
-    </form>
+    <div class="container">
+        <h2>Bienvenido, {{ user }}</h2>
+        <form action="{{ url_for('leer') }}" method="get">
+            <input type="hidden" name="user" value="{{ user }}">
+            <input type="hidden" name="password" value="{{ password }}">
+            <button type="submit">📖 Leer un mensaje</button>
+        </form>
+        <form action="{{ url_for('escribir') }}" method="get">
+            <input type="hidden" name="user" value="{{ user }}">
+            <input type="hidden" name="password" value="{{ password }}">
+            <button type="submit">✍️ Escribir un mensaje</button>
+        </form>
+    </div>
 </body>
 </html>
