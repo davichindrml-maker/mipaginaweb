@@ -9,8 +9,8 @@ app = Flask(__name__)
 app.secret.key="mi_clave_ultra_secreta"
 # Base de datos (usuarios y contraseñas)
 DIC= {
-    "usuario": ["claulopez", "Jacksoooon","Phdian", "Choco_Marii", "nadiashit","berenice", "pedrinho","davidlima","Esqueyosoyasi","Leohernandez","Lissete","ThePugG","Pollo","Yera","Eugene","Yenny_leal","MrPugs"],
-    "contraseña": ["umpalumpa","moonwenee","Mimamimi","Ingatumais","vetealv","amoamifamilia","pecj6573","soydaviddd","DCOPN","Energia","cocacola","Pugcore","GaussJordan","Psique","ferrosolar","Tukola","Axeltorres2002"]
+    "usuario": ["claulopez", "Jacksoooon","Phdian", "Choco_Marii", "nadiashit","berenice", "pedrinho","davidlima","Esqueyosoyasi","Leohernandez","Lissete","ThePugG","Pollo","Yera","Eugene","Yenny_leal","MrPugs","juliomontero"],
+    "contraseña": ["umpalumpa","moonwenee","Mimamimi","Ingatumais","vetealv","amoamifamilia","pecj6573","soydaviddd","DCOPN","Energia","cocacola","Pugcore","GaussJordan","Psique","ferrosolar","Tukola","Axeltorres2002","python123"]
 }
 usuarios = pd.DataFrame(data=DIC)
 
@@ -134,6 +134,7 @@ def logout():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Toma el puerto que Render le indique
     app.run(host="0.0.0.0", port=port)
+
 
 
 
