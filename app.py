@@ -81,26 +81,29 @@ def decodificar_mensaje(codigo, password):
     matriz_A_int = np.rint(matriz_A).astype(int)
     letras = [dic_inv.get(num, '') for num in matriz_A_int.flatten()]
     return ''.join(letras).capitalize()
-@app.route('/', methods=['GET', 'POST'])
+from flask import session
+@app.route('/', methods=['GET','POST'])
 def login():
-    mensaje=""
-    if request.method == 'POST':
+    if request.method=='POST':
         user = request.form['usuario']
         password = request.form['contraseña']
-        validacion = usuarios[(usuarios['usuario'] == user) & (usuarios['contraseña'] == password)]
+        validacion = usuarios[(usuarios['usuario']==user) & (usuarios['contraseña']==password)]
         if not validacion.empty:
-            session['usuario']=user
-            session['contraseña']=password
-            return redirect (url_for('opciones'))
+            session['user'] = user
+            session['password'] = password
+            return redirect(url_for('opciones'))
         else:
             mensaje = "❌ Usuario o contraseña incorrectos"
-    return render_template('login.html',mensaje=mensaje)
+            return render_template('login.html', mensaje=mensaje)
+
+    return render_template('login.html', mensaje="")
+
 
 @app.route('/opciones')
 def opciones():
-    if "usuario" not in session: #si no hay sesion activa
-        return redirect(url_for("login"))
-    return render_template('opciones.html',user=session['usuario'], password=session['password'])
+    user = session.get('user')
+    password = session.get('password')
+    return render_template('opciones.html', user=user, password=password)
     
 
 @app.route('/escribir', methods=['GET', 'POST'])
@@ -134,6 +137,7 @@ def logout():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Toma el puerto que Render le indique
     app.run(host="0.0.0.0", port=port)
+
 
 
 
