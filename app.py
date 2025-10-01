@@ -6,7 +6,7 @@ import random
 import math
 
 app = Flask(__name__)
-app.secret.key="mi_clave_ultra_secreta"
+app.secret_key="mi_clave_ultra_secreta"
 # Base de datos (usuarios y contraseñas)
 DIC= {
     "usuario": ["claulopez", "Jacksoooon","Phdian", "Choco_Marii", "nadiashit","berenice", "pedrinho","davidlima","Esqueyosoyasi","Leohernandez","Lissete","ThePugG","Pollo","Yera","Eugene","Yenny_leal","MrPugs","juliomontero","Nicolecastillo"],
@@ -134,6 +134,7 @@ def logout():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Toma el puerto que Render le indique
     app.run(host="0.0.0.0", port=port)
+
 
 
 
