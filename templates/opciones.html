@@ -43,24 +43,23 @@
 </head>
 <body>
     <div class="container">
-        <h2>Bienvenido, {{ user }}</h2>
-        <form action="{{ url_for('leer') }}" method="get">
-            <input type="hidden" name="user" value="{{ user }}">
-            <input type="hidden" name="password" value="{{ password }}">
-            <button type="submit">📖 Leer un mensaje</button>
-        </form>
-        <form action="{{ url_for('escribir') }}" method="get">
-            <input type="hidden" name="user" value="{{ user }}">
-            <input type="hidden" name="password" value="{{ password }}">
-            <button type="submit">✍️ Escribir un mensaje</button>
-    
-        </form>
-        <form action="{{ url_for('logout') }}" method="get">
-    <button type="submit">Cerrar sesión</button>
-        </form>
-            
-    </div>
+    <h2>Bienvenido, {{ user }}</h2>
+
+    <form action="{{ url_for('leer') }}" method="get">
+        <button type="submit">📖 Leer un mensaje</button>
+    </form>
+
+    <form action="{{ url_for('escribir') }}" method="get">
+        <button type="submit">✍️ Escribir un mensaje</button>
+    </form>
+
+    <form action="{{ url_for('logout') }}" method="get">
+        <button type="submit">Cerrar sesión</button>
+    </form>
+</div>
+
     
 </body>
 </html>
+
 
