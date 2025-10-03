@@ -81,62 +81,74 @@ def decodificar_mensaje(codigo, password):
     matriz_A_int = np.rint(matriz_A).astype(int)
     letras = [dic_inv.get(num, '') for num in matriz_A_int.flatten()]
     return ''.join(letras).capitalize()
-from flask import session
 @app.route('/', methods=['GET','POST'])
 def login():
-    if request.method=='POST':
+    mensaje = ""
+    if request.method == 'POST':
         user = request.form['usuario']
         password = request.form['contraseña']
-        validacion = usuarios[(usuarios['usuario']==user) & (usuarios['contraseña']==password)]
+        validacion = usuarios[
+            (usuarios['usuario'] == user) &
+            (usuarios['contraseña'] == password)
+        ]
         if not validacion.empty:
             session['user'] = user
             session['password'] = password
             return redirect(url_for('opciones'))
         else:
             mensaje = "❌ Usuario o contraseña incorrectos"
-            return render_template('login.html', mensaje=mensaje)
-
-    return render_template('login.html', mensaje="")
+    return render_template('login.html', mensaje=mensaje)
 
 
 @app.route('/opciones')
 def opciones():
     user = session.get('user')
     password = session.get('password')
-    return render_template('opciones.html', user=user, password=password)
-    
+    if not user or not password:
+        return redirect(url_for('login'))
+    return render_template('opciones.html', user=user)
 
-@app.route('/escribir', methods=['GET', 'POST'])
+
+@app.route('/escribir', methods=['GET','POST'])
 def escribir():
-    if "usuario" not in session:
-        return redirect(url_for("login"))
+    user = session.get('user')
+    password = session.get('password')
+    if not user or not password:
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
         mensaje = request.form['mensaje']
-        password = request.form['password']
-        codificado = mensaje_codificado_final(mensaje, password)
-        return render_template('resultado.html', resultado=codificado, tipo="Mensaje codificado")
-    
-    return render_template('escribir.html', user=session['usuario'], password=session['password'])
+        codificado = mensaje_codificado_final(mensaje, password)  # tu función
+        return render_template('resultado.html', resultado=codificado, tipo='Mensaje codificado')
 
-@app.route('/leer', methods=['GET', 'POST'])
+    return render_template('escribir.html')
+
+
+@app.route('/leer', methods=['GET','POST'])
 def leer():
-    if "usuario" not in session:
-        return redirect(url_for("login"))
+    user = session.get('user')
+    password = session.get('password')
+    if not user or not password:
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
         codigo = request.form['codigo']
-        password = request.form['password']
-        mensaje = decodificar_mensaje(codigo, password)
-        return render_template('resultado.html', resultado=mensaje, tipo="Mensaje decodificado")
-    return render_template('leer.html', user=session['usuario'], password=session['password'])
+        mensaje = decodificar_mensaje(codigo, password)  # tu función
+        return render_template('resultado.html', resultado=mensaje, tipo='Mensaje decodificado')
+
+    return render_template('leer.html')
+
+
 @app.route('/logout')
 def logout():
-    session.clear() #borra todo lo que hay en la sesión
+    session.clear()
     return redirect(url_for('login'))
 
 # Ejecutar el servidor
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Toma el puerto que Render le indique
     app.run(host="0.0.0.0", port=port)
+
 
 
 
